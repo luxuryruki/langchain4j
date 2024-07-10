@@ -47,8 +47,10 @@ public class LangchainServiceImpl implements LangchainService{
     }
 
     @Override
-    public Optional<ChatContext> read(String id) {
-        return repository.findById(id);
+
+    public ChatContext read(String id) {
+
+        return repository.findById(id).orElse(null);
     }
 
     @Override
@@ -93,7 +95,7 @@ public class LangchainServiceImpl implements LangchainService{
         ChatMemoryProvider chatMemoryProvider = memoryId -> MessageWindowChatMemory.builder()
                 .id(memoryId)
                 .maxMessages(20)
-                .chatMemoryStore(new PersistentChatMemoryStore(context))
+                .chatMemoryStore(new PersistentChatMemoryStore())
                 .build();
 
 
@@ -108,8 +110,11 @@ public class LangchainServiceImpl implements LangchainService{
 
 
     public Response<AiMessage> getMessage(String id, String message){
-
-        MessageAssistant assistant = getMessageAssistant();
+        ChatContext context = read(id);
+        if(context == null){
+            context = new ChatContext(id);
+        }
+        MessageAssistant assistant = getMessageAssistant(context);
 
         return assistant.chat(id,message);
     }

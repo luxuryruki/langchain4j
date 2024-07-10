@@ -14,6 +14,10 @@ public class ChatContext {
     @Column
     String message;
 
+    public ChatContext(String id) {
+        this.id = id;
+    }
+
     public void setMessage(String message) {
         this.message = message;
     }
