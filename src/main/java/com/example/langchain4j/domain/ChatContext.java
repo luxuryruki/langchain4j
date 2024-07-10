@@ -18,6 +18,9 @@ public class ChatContext {
         this.id = id;
     }
 
+    public ChatContext() {
+    }
+
     public void setMessage(String message) {
         this.message = message;
     }
