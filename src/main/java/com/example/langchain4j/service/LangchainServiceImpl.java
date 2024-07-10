@@ -48,13 +48,13 @@ public class LangchainServiceImpl implements LangchainService{
 
     @Override
 
-    public ChatContext read(String id) {
+    public ChatContext read(Long id) {
 
         return repository.findById(id).orElse(null);
     }
 
     @Override
-    public void delete(String id) {
+    public void delete(Long id) {
         repository.deleteById(id);
     }
 
@@ -109,10 +109,10 @@ public class LangchainServiceImpl implements LangchainService{
     }
 
 
-    public Response<AiMessage> getMessage(String id, String message){
+    public Response<AiMessage> getMessage(Long id, String message){
         ChatContext context = read(id);
         if(context == null){
-            context = new ChatContext(id);
+            context = new ChatContext();
         }
         MessageAssistant assistant = getMessageAssistant(context);
 

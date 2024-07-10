@@ -6,5 +6,5 @@ import dev.langchain4j.service.MemoryId;
 import dev.langchain4j.service.UserMessage;
 
 public interface MessageAssistant {
-    Response<AiMessage> chat(@MemoryId String id, @UserMessage String userMessage);
+    Response<AiMessage> chat(@MemoryId Long id, @UserMessage String userMessage);
 }

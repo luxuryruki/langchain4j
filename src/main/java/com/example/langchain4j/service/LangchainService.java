@@ -11,6 +11,6 @@ import java.util.Optional;
 public interface LangchainService {
     ChatContext create(ChatContext context);
     ChatContext update(ChatContext context);
-    ChatContext read(String id);
-    void delete(String id);
+    ChatContext read(Long id);
+    void delete(Long id);
 }

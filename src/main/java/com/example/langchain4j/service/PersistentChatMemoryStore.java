@@ -27,7 +27,7 @@ public class PersistentChatMemoryStore implements ChatMemoryStore {
     public List<ChatMessage> getMessages(Object memoryId) {
         // TODO: Implement getting all messages from the persistent store by memory ID.
         try {
-            Optional<ChatContext> chatContextOpt = chatContextRepository.findById((String) memoryId);
+            Optional<ChatContext> chatContextOpt = chatContextRepository.findById((Long) memoryId);
             if (chatContextOpt.isPresent()) {
                 ChatContext context = chatContextOpt.get();
                 String json = context.getMessage();
@@ -44,13 +44,13 @@ public class PersistentChatMemoryStore implements ChatMemoryStore {
     public void updateMessages(Object memoryId, List<ChatMessage> messages) {
         // TODO: Implement updating all messages in the persistent store by memory ID.
         String json = messagesToJson(messages);
-        Optional<ChatContext> chatContextOpt = chatContextRepository.findById((String) memoryId);
+        Optional<ChatContext> chatContextOpt = chatContextRepository.findById((Long) memoryId);
         if (chatContextOpt.isPresent()) {
             ChatContext context = chatContextOpt.get();
             context.setMessage(json);
             chatContextRepository.save(context);
         } else {
-            ChatContext context = new ChatContext((String) memoryId);
+            ChatContext context = new ChatContext();
             context.setMessage(json);
             chatContextRepository.save(context);
         }
@@ -62,6 +62,6 @@ public class PersistentChatMemoryStore implements ChatMemoryStore {
     @Override
     public void deleteMessages(Object memoryId) {
         // TODO: Implement deleting all messages in the persistent store by memory ID.
-        chatContextRepository.deleteById((String) memoryId);
+        chatContextRepository.deleteById((Long) memoryId);
     }
 }
